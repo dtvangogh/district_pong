@@ -1,6 +1,6 @@
 <?php
 // To make sure we don't need to create the header section of the website on multiple pages, we instead create the header HTML markup in a separate file which we then attach to the top of every HTML page on our website. In this way if we need to make a small change to our header we just need to do it in one place. This is a VERY cool feature in PHP!
-require "header.php";
+include "header.php";
 $dBServername = "localhost";
 $dBUsername = "root";
 $dBPassword = "";
@@ -11,14 +11,17 @@ $connect = mysqli_connect($dBServername, $dBUsername, $dBPassword, $dBName);
 function fill_users($connect)
 {
 	$output = ' ';
+	
+	if (isset($_SESSION['id'])) {
+	$user_id = $_SESSION['id'];
 
-	$sql = "SELECT * FROM users";
+	$sql = "SELECT * FROM users WHERE idUsers != $user_id";
 
 	$result = mysqli_query($connect, $sql);
 
 	while ($row = mysqli_fetch_array($result)) {
 		$output .= '<option value=" ' . $row["uidUsers"] . '">' . $row["uidUsers"] . '</option>';
-	}
+	}}
 	return $output; 
 }
 	// Here we create an error message if the user made an error trying to submit 
@@ -62,12 +65,9 @@ function fill_users($connect)
                 
             <html> 
                 
-                   <h3> 
-	<! ––PLAYER 1 BOX/-->
-                <select id="current-user" name="player1">
-                       <option value="0"> Select yourself </option>
-					<option value="<?php echo $_SESSION['uid']; ?>"> <?php echo $_SESSION['uid']; ?> </option>
-                       </select> 
+                   <h4> 
+					  <input type="hidden" name="player1" 
+					value="<?php echo $_SESSION['uid']; ?>"> <?php echo "hello  "; echo $_SESSION['uid']; ?>  
 					   <input type="player1score" name="player1score"
                  placeholder="Enter your score">
      <! ––PLAYER 2 BOX/-->
