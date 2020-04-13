@@ -1,5 +1,7 @@
 <?php
 
+		
+
 // Here we check whether the user got to this page by clicking the proper signup button.
 if (isset($_POST['submit'])) {
 
@@ -14,6 +16,29 @@ if (isset($_POST['submit'])) {
 	$player1score = $_POST['player1score'];
 	$player2 = $_POST['player2'];
 	$player2score = $_POST['player2score'];
+	
+	 
+	{$sql = "INSERT INTO games (player1, player1score, player2, player2score) VALUES (?, ?, ?, ?);";
+		// Here we initialize a new statement using the connection from the dbh.inc.php file.
+		$stmt = mysqli_stmt_init($conn);
+		// Then we prepare our SQL statement AND check if there are any errors with it.
+		if (!mysqli_stmt_prepare($stmt, $sql)) {
+			// If there is an error we send the user to an error page
+			header("Location: ../play.php?error=sqlerror");
+			exit();
+		} else {
+
+
+			// Next we need to bind the type of parameters we expect to pass into the statement, and bind the data from the user.
+			mysqli_stmt_bind_param($stmt, "ssss", $player1, $player1score, $player2, $player2score);
+			// Then we execute the prepared statement and send it to the database!
+			// This means the user is now registered! :)
+			mysqli_stmt_execute($stmt);
+			// Lastly we send the user back to the signup page with a success message!
+			header("Location: ../play.php?submit=success");
+			exit();
+		}}
+	
     
     if (empty($player1score) || empty($player2) || empty($player2score)){
 		header("Location: ../play.php?error=emptyfields");
@@ -22,11 +47,44 @@ if (isset($_POST['submit'])) {
 	else if ($player1score == $player2score) {
 		header("Location: ../play.php?error=invalidscore");
 		exit();
+		
+	}
+	
+	else if ($player1score == 11 || $player2score == 11){
+		$sql = "INSERT INTO games (player1, player1score, player2, player2score) VALUES (?, ?, ?, ?);";
+		// Here we initialize a new statement using the connection from the dbh.inc.php file.
+		$stmt = mysqli_stmt_init($conn);
+		// Then we prepare our SQL statement AND check if there are any errors with it.
+		if (!mysqli_stmt_prepare($stmt, $sql)) {
+			// If there is an error we send the user to an error page
+			header("Location: ../play.php?error=sqlerror");
+			exit();
+		} else {
+
+
+			// Next we need to bind the type of parameters we expect to pass into the statement, and bind the data from the user.
+			mysqli_stmt_bind_param($stmt, "ssss", $player1, $player1score, $player2, $player2score);
+			// Then we execute the prepared statement and send it to the database!
+			// This means the user is now registered! :)
+			mysqli_stmt_execute($stmt);
+			// Lastly we send the user back to the signup page with a success message!
+			header("Location: ../play.php?submit=success");
+			exit();
+		} 
+	
+	 
+	 
+	} //submit into games
+	
+	
+	
+	else if ($player1score != 21 && $player2score != 21) {
+		header("Location: ../play.php?error=invalidscore");
 	}
 	
 	
+	
 else {
-
 		$sql = "INSERT INTO games (player1, player1score, player2, player2score) VALUES (?, ?, ?, ?);";
 		// Here we initialize a new statement using the connection from the dbh.inc.php file.
 		$stmt = mysqli_stmt_init($conn);
@@ -48,6 +106,7 @@ else {
 			exit();
 		}
 	
+} //insert into games 
 
 
 // Then we close the prepared statement and the database connection!
@@ -55,5 +114,5 @@ else {
 // If the user tries to access this page an inproper way, we send them back to the signup page.
 header("Location: ../play.php");
 exit();
-}}
+}
 

@@ -15,7 +15,6 @@
 			$userResult = mysqli_query($conn, $sql);
 			//$userRowArray = mysqli_fetch_assoc($userResult);
 			//use lines 11-16 if usernames are saved as ID numbers. Changed it so usernames saved as username in games table
-			
             ?>
 <!DOCTYPE html>
 <html>
@@ -23,10 +22,10 @@
     
 </head>
 <body>
-   <table style="width:300px; line-height:20px;">
+   <table style="width:300px; line-height:40px;">
 	   
 	   
-	   <caption> <?php echo $row['date']?></caption>
+	   <caption> <h4> Game  <?php echo $row['idgames'];?> <?php echo "  : "; echo $row['date']?></caption>
         
 <!--			tr means row -->
 			
@@ -36,8 +35,8 @@
 			<th scope="col">Players</th>
     <th scope="col">Score</th>-->
 	
-			<th colspan="5"><h3>Game # <?php  echo $row['idgames']; ?></h3> </th>
 <!--	   create column in games table called "match description" where users can enter custom titles -->
+	   
             
 		<tr>
 <!--display ranking next to each player-->

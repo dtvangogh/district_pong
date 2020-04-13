@@ -67,9 +67,10 @@ function fill_users($connect)
                 
                    <h4> 
 					  <input type="hidden" name="player1" 
-					value="<?php echo $_SESSION['uid']; ?>"> <?php echo "hello  "; echo $_SESSION['uid']; ?>  
+					value="<?php echo $_SESSION['uid']; ?>"> <?php echo "hello  "; echo $_SESSION['uid']; ?>  <br>
 					   <input type="player1score" name="player1score"
                  placeholder="Enter your score">
+					   <br>
      <! ––PLAYER 2 BOX/-->
                    <h3>
                         <select id="users" name="player2"> 
@@ -77,6 +78,7 @@ function fill_users($connect)
                             
 							<?php echo fill_users($connect); ?> 
 						</select>
+					   <br>
 					   <input type="player2score" name="player2score"
                  placeholder="Enter opponents score">
                        
