@@ -18,39 +18,14 @@ if (isset($_POST['submit'])) {
 	$player2score = $_POST['player2score'];
 	
 	 
-	{$sql = "INSERT INTO games (player1, player1score, player2, player2score) VALUES (?, ?, ?, ?);";
-		// Here we initialize a new statement using the connection from the dbh.inc.php file.
-		$stmt = mysqli_stmt_init($conn);
-		// Then we prepare our SQL statement AND check if there are any errors with it.
-		if (!mysqli_stmt_prepare($stmt, $sql)) {
-			// If there is an error we send the user to an error page
-			header("Location: ../play.php?error=sqlerror");
-			exit();
-		} else {
-
-
-			// Next we need to bind the type of parameters we expect to pass into the statement, and bind the data from the user.
-			mysqli_stmt_bind_param($stmt, "ssss", $player1, $player1score, $player2, $player2score);
-			// Then we execute the prepared statement and send it to the database!
-			// This means the user is now registered! :)
-			mysqli_stmt_execute($stmt);
-			// Lastly we send the user back to the signup page with a success message!
-			header("Location: ../play.php?submit=success");
-			exit();
-		}}
 	
-    
+	
     if (empty($player1score) || empty($player2) || empty($player2score)){
 		header("Location: ../play.php?error=emptyfields");
 		exit();
 	} 
-	else if ($player1score == $player2score) {
-		header("Location: ../play.php?error=invalidscore");
-		exit();
-		
-	}
-	
-	else if ($player1score == 11 || $player2score == 11){
+	if (player1score == 11)
+	{
 		$sql = "INSERT INTO games (player1, player1score, player2, player2score) VALUES (?, ?, ?, ?);";
 		// Here we initialize a new statement using the connection from the dbh.inc.php file.
 		$stmt = mysqli_stmt_init($conn);
@@ -70,17 +45,36 @@ if (isset($_POST['submit'])) {
 			// Lastly we send the user back to the signup page with a success message!
 			header("Location: ../play.php?submit=success");
 			exit();
-		} 
-	
-	 
-	 
-	} //submit into games
-	
-	
-	
-	else if ($player1score != 21 && $player2score != 21) {
-		header("Location: ../play.php?error=invalidscore");
+		}
 	}
+
+	if ($player1score > 21 || $player2score > 21) {
+		header("Location: ../play.php?error=invalidscore");
+		exit();
+	}	
+	if ($player1score == 11 && $player2score > 11 && $player2score < 21) {
+		header("Location: ../play.php?error=invalidscore");
+		exit();
+	}	
+	if ($player1score > 11 && $player1score < 21 && $player2score == 11) {
+		header("Location: ../play.php?error=invalidscore");
+		exit();
+	}	
+	if ($player1score < 11 && $player2score < 11) {
+		header("Location: ../play.php?error=invalidscore");
+		exit();
+	}	
+    
+	if ($player1score == $player2score) {
+		header("Location: ../play.php?error=invalidsamescore");
+		exit();
+		
+	}
+	
+	
+	 
+	
+	
 	
 	
 	

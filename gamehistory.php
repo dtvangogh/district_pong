@@ -1,53 +1,58 @@
 <?php
     include 'includes/dbh.inc.php';
     require 'header.php';
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    
-    <title> </title>
-</head>
-<body>
-    <table border="2px" style="width:400px; line-height:30px;">
-        
-        <tr>
-			<th colspan="5"><h2>Game History</h2> </th>
-            
-        </tr>
-        <t>
-            <th> player1 </th>
-             <th> score </th>
-             <th> player2 </th>
-             <th> score </th>
-            <th> date</th>
-            </t>
-    
-
-<?php 
-		
-    $sql = "SELECT * FROM games";
+	
+		$sql = "SELECT * FROM games";
     $result = mysqli_query($conn, $sql);
     $resultCheck = mysqli_num_rows($result);
-    
-    if ($resultCheck > 0) {
+		
+		 if ($resultCheck > 0) {
 		
         while ($row = mysqli_fetch_assoc($result)) {
 			
 			$sql = "SELECT * FROM users ";
 			$sql .="WHERE idUsers =". $row['player2']; 
 			$userResult = mysqli_query($conn, $sql);
-			$userRowArray = mysqli_fetch_assoc($userResult);
-		
-			
+			//$userRowArray = mysqli_fetch_assoc($userResult);
+			//use lines 11-16 if usernames are saved as ID numbers. Changed it so usernames saved as username in games table
             ?>
-        <tr>
-			<td><?php  echo $row['player1']; ?></td>
+<!DOCTYPE html>
+<html>
+<head>
+    
+</head>
+<body>
+   <table style="width:300px; line-height:40px;">
+	   
+	   
+	   <caption> <h4> Game  <?php echo $row['idgames'];?> <?php echo "  : "; echo $row['date']?></caption>
+        
+<!--			tr means row -->
+			
+<!--			make an empty box in the rowblock empty -->
+			
+		<!--	<td></td> 
+			<th scope="col">Players</th>
+    <th scope="col">Score</th>-->
+	
+<!--	   create column in games table called "match description" where users can enter custom titles -->
+	   
+            
+		<tr>
+<!--display ranking next to each player-->
+			<td></td>
+			<td><?php  echo $row['player1'];echo' (1)'; ?>  </td>
 			<td><?php  echo $row['player1score']; ?></td>
-            <td><?php  echo $row['player2']; ?></td>
-           <td><?php  echo $row['player2score']; ?></td>
-           
-        </tr>
+			
+		</tr>
+	   <tr>
+		   <td></td>
+	   <td><?php  echo $row['player2']; echo' (4)'; ?></td>
+  
+			<td><?php  echo $row['player2score']; ?></td>
+		  
+		</tr>
+		<br>
         <?php
         }}
         ?>

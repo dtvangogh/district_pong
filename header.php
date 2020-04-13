@@ -29,7 +29,6 @@ require "includes/dbh.inc.php";
 				<li><a href="#">Rankings</a></li>
 				<li><a href="players.php">Players</a></li>
 				<li><a href="gamehistory.php">Game History</a></li>
-				<li><a href="testhistory.php">Game History 2</a></li>
 			</ul>
 		</nav>
 		<div class="header-login">

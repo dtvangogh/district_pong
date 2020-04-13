@@ -28,8 +28,10 @@ function fill_users($connect)
 			if (isset($_GET["error"])) {
 				if ($_GET["error"] == "emptyfields") {
 					echo '<h2 class="submiterror">you forgot to fill in a field</h2>';
-				} else if ($_GET["error"] == "invalidscore") {
-					echo '<h2 class="submiterror">Finish the game. We dont end in ties here.</h2>';
+				} else if ($_GET["error"] == "invalidsamescore") {
+					echo '<h2 class="submiterror">Finish the game. We dont end in ties here.</h2>';}
+					else if ($_GET["error"] == "invalidscore") {
+					echo '<h2 class="submiterror">Games must be played to 11 or 21.</h2>';
 				} else if ($_GET["error"] == "invalidopponent") {
 					echo '<h2 class="submiterror">Playing with yourself is unhealthy!</h2>';
 				} 
